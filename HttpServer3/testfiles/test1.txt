@@ -1,0 +1,9 @@
+This is test file N2
+
+
+   function rand(num)
+   {
+     return Math.random() * num;
+   }
+
+   alert(rand(10));
