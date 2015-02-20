@@ -45,5 +45,5 @@ public class HttpServer3 {
     }
 
 	 
-	private static final int DEFAULT_PORT = 8080;
+	private static final int DEFAULT_PORT = 8088;
     }
