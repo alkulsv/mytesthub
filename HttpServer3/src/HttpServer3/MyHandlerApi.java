@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URLDecoder;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import com.sun.net.httpserver.HttpExchange;
 public abstract class MyHandlerApi implements HttpHandler {
     public Map<String, String> map;
 	protected StringBuffer  stringbuffer = new StringBuffer("");
+	public static Map <String, Integer> apicalls = new HashMap <String, Integer>();
 	 public void handle(HttpExchange t) throws IOException {
 		    stringbuffer.setLength(0);
 		    int code = HttpURLConnection.HTTP_BAD_REQUEST;
@@ -26,23 +28,38 @@ public abstract class MyHandlerApi implements HttpHandler {
 	        OutputStream os = t.getResponseBody();
 	        System.out.println("Request: " + uri.getQuery());
 	        map = splitQuery(uri);
-	        	if(map.get("file1")!= null) {
-	        		File file1 = new File((String) map.get("file1"));
-	        		if(file1.exists()) {
-	        			code = handler(file1);
-	        		}
-	        		else {
-	        			System.out.println("File not found");
-
-	        		}
-	        	}
+	        code = handler();
 	        t.sendResponseHeaders(code, 0);
 	        os.write(stringbuffer.toString().getBytes());
 	        os.close();
 	    }
-    
-	 public abstract int handler(File file) throws IOException;
-	 
+
+	 /* take the filepath from  map and check for existing */
+	 public File takefile(String filepath) throws IOException {
+		 if ( map.get(filepath)!= null) {
+     		File file = new File((String) map.get(filepath));
+			if (file.exists()){
+				return file;
+			}
+		 }
+		return null;
+ }
+		 
+	 public int handler()  throws IOException  {
+		System.out.println("incorrect request");
+		 return HttpURLConnection.HTTP_BAD_REQUEST;
+	 }
+	
+	 /* count into apicalls count of calls api */
+	   public void apicallscounter(String apiname) {
+   if(apicalls != null & !apicalls.containsKey(apiname)) {
+			   apicalls.put(apiname, 1);
+		   }
+			   else {		   
+	    	apicalls.put(apiname, apicalls.get(apiname) + 1);
+		   }
+	   }
+   
 	 //  parse query
 	 public static Map<String, String> splitQuery(URI uri) throws UnsupportedEncodingException {
 		    Map<String, String> query_pairs = new LinkedHashMap<String, String>();

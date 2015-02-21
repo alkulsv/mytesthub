@@ -38,12 +38,11 @@ public class HttpServer3 {
 	   server.createContext("/api4", new MyHandlerApi4());
 	   server.createContext("/api5", new MyHandlerApi5());
 	   server.createContext("/api6", new MyHandlerApi6());
+	   server.createContext("/api7", new MyHandlerApi7());
 	   server.setExecutor(null); // creates a default executor
 	   server.start();
 	   System.out.println("NEW Server is listening on port  " + port);
-	   
     }
-
 	 
 	private static final int DEFAULT_PORT = 8080;
     }
