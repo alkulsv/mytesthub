@@ -42,7 +42,7 @@ public class HttpServer3 {
 	   server.setExecutor(null); // creates a default executor
 	   server.start();
 	   System.out.println("NEW Server is listening on port  " + port);
-    }
-	 
+       }
+ 
 	private static final int DEFAULT_PORT = 8080;
     }
