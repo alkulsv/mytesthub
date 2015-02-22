@@ -44,5 +44,5 @@ public class HttpServer3 {
 	   System.out.println("NEW Server is listening on port  " + port);
        }
  
-	private static final int DEFAULT_PORT = 8080;
+	private static final int DEFAULT_PORT = 8082;
     }
