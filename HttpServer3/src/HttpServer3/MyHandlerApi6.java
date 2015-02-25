@@ -1,6 +1,6 @@
 package HttpServer3;
 //API6 Handler
-//Parameter /api?file1=filewithpath&file2=filewithpath
+//Parameter /api6?file1=filewithpath&file2=filewithpath
 //Compare file1&file2 and return results;  
 
 import java.io.File;

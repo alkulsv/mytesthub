@@ -1,6 +1,6 @@
 package HttpServer3;
 // API1 Handler
-// Parameter /api?file1=filewithpath
+// Parameter /api1?file1=filewithpath
 // return file1 size.
 import java.io.File;
 import java.io.IOException;

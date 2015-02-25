@@ -1,14 +1,10 @@
 package HttpServer3;
-//API6 Handler
-//Parameter /api?file1=filewithpath&file2=filewithpath
-//Compare file1&file2 and return results;  
+//API7 Handler
+//Parameter /api7
+//return counters of all API requests  
 
-import java.io.File;
-import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.Set;
-
-import org.apache.commons.io.FileUtils;
 
 public class MyHandlerApi7 extends MyHandlerApi {
     public int handler() {

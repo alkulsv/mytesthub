@@ -1,6 +1,6 @@
 package HttpServer3;
 //API4 Handler
-//Parameter /api?file1=filewithpath
+//Parameter /api4?file1=filewithpath
 //return file body.
 
 import java.io.File;

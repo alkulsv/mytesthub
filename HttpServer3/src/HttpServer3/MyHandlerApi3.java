@@ -1,6 +1,6 @@
 package HttpServer3;
 //API3 Handler
-//Parameter /api?file1=path
+//Parameter /api3?file1=path
 //return file list of directory.
 
 import java.io.File;

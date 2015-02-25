@@ -1,6 +1,6 @@
 package HttpServer3;
 //API5 Handler
-//Parameter /api?file1=filewithpath
+//Parameter /api5?file1=filewithpath
 //Make file1 copy in the Temp/ Dirrectory and return temp file name.
 
 import java.io.File;

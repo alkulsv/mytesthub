@@ -1,6 +1,6 @@
 package HttpServer3;
 //API2 Handler
-//Parameter /api?file1=filewithpath
+//Parameter /api2?file1=filewithpath
 //return file MD5 code.
 
 import java.io.File;
