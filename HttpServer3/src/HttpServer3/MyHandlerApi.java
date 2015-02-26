@@ -3,9 +3,9 @@ package HttpServer3;
 // Parameter /api?file1=filewithpath
 // return file1 size.
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-//import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URI;
@@ -29,6 +29,7 @@ public abstract class MyHandlerApi implements HttpHandler {
 	        System.out.println("Request: " + uri.getQuery());
 	        map = splitQuery(uri);
 	        code = handler();
+	        logWrite("Request: " + uri.toString() + ",   Answer code is " + code + "\n");
 	        t.sendResponseHeaders(code, 0);
 	        os.write(stringbuffer.toString().getBytes());
 	        os.close();
@@ -59,7 +60,14 @@ public abstract class MyHandlerApi implements HttpHandler {
 	    	apicalls.put(apiname, apicalls.get(apiname) + 1);
 		   }
 	   }
-   
+
+   public void logWrite(String message) throws IOException {
+			   FileOutputStream logfile = new FileOutputStream(LOGFILEPATH, true);
+		   		logfile.write(message.getBytes());
+		   		logfile.close();
+	   }
+
+	   
 	 //  parse query
 	 public static Map<String, String> splitQuery(URI uri) throws UnsupportedEncodingException {
 		    Map<String, String> query_pairs = new LinkedHashMap<String, String>();
@@ -87,5 +95,8 @@ public abstract class MyHandlerApi implements HttpHandler {
 		  }
 		  return query_pairs;
 		}
-*/	 
+*/
+	 
+		public static final String LOGFILEPATH = "Temp/httpserver3.log";
+
 }
