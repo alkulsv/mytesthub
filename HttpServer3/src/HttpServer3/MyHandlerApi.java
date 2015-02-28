@@ -17,11 +17,21 @@ import java.util.Map;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
 
+/**
+ *  This is main API handler.
+ */
+
 public abstract class MyHandlerApi implements HttpHandler {
     public Map<String, String> map;
 	protected StringBuffer  stringbuffer = new StringBuffer("");
-	public static Map <String, Integer> apicalls = new HashMap <String, Integer>();
-	 public void handle(HttpExchange t) throws IOException {
+	protected static Long timespendtotal = (long) 0;
+	public static Map <String, long[]> apicalls = new HashMap <String, long[]>();
+
+	/**
+	 *  This is main method of API handler. It is provide logging information and time spend for all API calls. 
+	 */
+	public void handle(HttpExchange t) throws IOException {
+		    Long timestart = System.currentTimeMillis();
 		    stringbuffer.setLength(0);
 		    int code = HttpURLConnection.HTTP_BAD_REQUEST;
 	        URI uri = t.getRequestURI();
@@ -33,12 +43,21 @@ public abstract class MyHandlerApi implements HttpHandler {
 	        t.sendResponseHeaders(code, 0);
 	        os.write(stringbuffer.toString().getBytes());
 	        os.close();
+		    Long timeend = System.currentTimeMillis();
+		    Long timework = timeend - timestart;
+		    timespendtotal += timework;
+		    apicallscounter(uri.getPath(), timework);
 	    }
 
-	 /* take the filepath from  map and check for existing */
-	 public File takefile(String filepath) throws IOException {
-		 if ( map.get(filepath)!= null) {
-     		File file = new File((String) map.get(filepath));
+	/**
+	 *  This method try to found file for parameter filepath. If parameter founded and it is file, method return object File. Another return null.
+	 *  @param paramnane Is the name of parameter.
+	 *  @throws IOException IO-error exception.
+	 *  @return file Object File, or null. 
+	 */
+	 public File takefile(String paramnane) throws IOException {
+		 if ( map.get(paramnane)!= null) {
+     		File file = new File((String) map.get(paramnane));
 			if (file.exists()){
 				return file;
 			}
@@ -46,21 +65,35 @@ public abstract class MyHandlerApi implements HttpHandler {
 		return null;
  }
 		 
+		/**
+		 *  This handler will run, if any correct API handlers not found.
+		 *  @return HTTP_BAD_REQUEST 
+     	 *  @throws IOException IO-error exception.
+		 */
 	 public int handler()  throws IOException  {
 		System.out.println("incorrect request");
 		 return HttpURLConnection.HTTP_BAD_REQUEST;
 	 }
 	
-	 /* count into apicalls count of calls api */
-	   public void apicallscounter(String apiname) {
+		/**
+		 *  This method update API calls counters and API calls time spend.
+		 *  @param apiname Name of current API.
+		 *  @param timework spend of current API.
+		 */
+	   public void apicallscounter(String apiname, long timework) {
    if(apicalls != null & !apicalls.containsKey(apiname)) {
-			   apicalls.put(apiname, 1);
+			   apicalls.put(apiname, new long[] {1, timework});
 		   }
-			   else {		   
-	    	apicalls.put(apiname, apicalls.get(apiname) + 1);
+			   else {
+	    	apicalls.put(apiname, new long[] {apicalls.get(apiname)[0] + 1, apicalls.get(apiname)[1] + timework});
 		   }
 	   }
 
+		/**
+		 *  This method logging all API requests in file LOGFILEPATH.
+		 *  @param message Text for the logging.
+		 *  @throws IOException IO-error exception.
+		 */
    public void logWrite(String message) throws IOException {
 			   FileOutputStream logfile = new FileOutputStream(LOGFILEPATH, true);
 		   		logfile.write(message.getBytes());
@@ -68,14 +101,21 @@ public abstract class MyHandlerApi implements HttpHandler {
 	   }
 
 	   
-	 //  parse query
+	/**
+	 *  This method parse the query.
+	 *  @param uri current URI.
+	 *  @return  query_pairs
+	 *  @throws UnsupportedEncodingException Encoding exception.
+	 */
 	 public static Map<String, String> splitQuery(URI uri) throws UnsupportedEncodingException {
 		    Map<String, String> query_pairs = new LinkedHashMap<String, String>();
 		    String query = uri.getQuery();
+		    if(query != null) {
 		    String[] pairs = query.split("&");
 		    for (String pair : pairs) {
 		        int idx = pair.indexOf("=");
 		        if (idx > 0) query_pairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"), URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
+		    }
 		    }
 		    return query_pairs;
 		}	 

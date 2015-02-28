@@ -1,6 +1,6 @@
 strUrlCounter = "http://localhost:8082/api8?"
-rem strUrl = "http://localhost:8082/api2?file1=testfiles/test.txt"
-strUrl = "http://localhost:8082/api6?file1=testfiles/test.txt&file2=testfiles/test1.txt"
+strUrl = "http://localhost:8082/api7?file1=testfiles/test.txt"
+rem strUrl = "http://localhost:8082/api6?file1=testfiles/test.txt&file2=testfiles/test1.txt"
 
 Set Http = WScript.CreateObject("MSXML2.ServerXMLHTTP") 
 Http.open "GET", strUrlCounter, False

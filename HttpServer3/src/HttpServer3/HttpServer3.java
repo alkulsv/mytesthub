@@ -1,31 +1,35 @@
 package HttpServer3;
-/*
- * Http TestServer
- * 
- *localhost:9998/api1?file=filewithpath
- *return file1 size.
- *
- *localhost:9998/api2?file=filewithpath
- *return file MD5 code.
- *
- *localhost:9998/api3?file=filewithpath
- *return file list of directory.
- *
- *localhost:9998/api4?file=filewithpath
- *return file body.
- *
- *localhost:9998/api5?file=filewithpath
- *Make file1 copy in the C:/Temp Dirrectory and return temp file name.
-		 
- *localhost:9998/api?file1=filewithpath&file2=filewithpath
- *Compare file1&file2 and return results;   
- */
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import com.sun.net.httpserver.HttpServer;
 
+/**
+ * This is simple HTTP Server test program. After the start it will use port DEFAULT_PORT at the local host
+ * for the listening requests and send some answers, depend API number. <br>
+ * /Api1  Return file size. Parameter: file1=filepath <br>
+ * /Api2  Return MD5 code for the file. Parameter: file1=filepath <br>
+ * /Api3  Return list of directory. Parameter: file=path <br>
+ * /Api4  Return file body. Parameter: file1=filepath <br>
+ * /Api5  Make the temporary copy of the file if Temp/ directory and return filepath of tmp-file. Parameter: file1=filepath <br>
+ * /Api6  Compare two files for equals. Parameter: file1=filepath&amp;file2=filepath <br>
+ * /Api7  Check the API calls counters and time spend. <br>
+ * /Api8  Check the total API calls and total time spend. <br>
+ *  <br>
+ *  Sample request: http://localhost:8082/api1?file1=testfiles/test.txt <br>
+ *  <br>
+ * @author Alexander Kulentsov
+ * @version 1.1
+ *
+ */
 
 public class HttpServer3 {
+	
+	/**
+	 *  This is main method.
+	 *  
+	 * @param args parameters.
+	 * @throws IOException IO-error exception.
+	 */
 	public static void main(String[] args)
 	  throws IOException {
 		int port = DEFAULT_PORT; if (args.length > 0)
@@ -45,5 +49,8 @@ public class HttpServer3 {
 	   System.out.println("NEW Server is listening on port  " + port);
        }
  
+	/**
+	 * is define default port.
+	 */
 	private static final int DEFAULT_PORT = 8082;
     }
