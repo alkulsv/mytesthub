@@ -1,14 +1,11 @@
 package HttpServer3;
-//API8 Handler
-//Parameter /api8
-//return total couner of requests  
 
 import java.net.HttpURLConnection;
 import java.util.Set;
 
 /**
  *  Check the total API calls and total time spend. API8 Handler for /api8 context.<br>
- *  Sample request: localhost:8082/api7
+ *  Sample request: localhost:8082/api8
  */
 public class MyHandlerApi8 extends MyHandlerApi {
 
